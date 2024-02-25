@@ -11,20 +11,13 @@ server.use(cors());
 server.use(express.urlencoded({ extended: false }))
 server.use(express.json());
 server.disable('x-powered-by');
-server.use(express.static(path.join(__dirname, 'public')));
 // 
 
 const routers = require('./routes/index');
 // 
-server.use(`${globals.apiRoute}country`, routers.country);
-server.use(`${globals.apiRoute}location`, routers.location);
-// server.use(`${globals.apiRoute}reservation`, reservationsRouter);
-server.use(`${globals.apiRoute}track`, routers.track);
-// server.use(`${globals.apiRoute}schedule`, schedulesRouter);
-// server.use(`${globals.apiRoute}vehicle`, vehiclesRouter);
-server.use(`${globals.apiRoute}review`, routers.companyReview);
-server.use(`${globals.apiRoute}company`, routers.company);
-server.use(`${globals.apiRoute}user`, routers.user);
+server.use(`${globals.apiRoute}loan`, routers.loan);
+server.use(`${globals.apiRoute}book`, routers.book);
+server.use(`${globals.apiRoute}autor`, routers.autor);
 // server.use('/', );
 
 server.listen(port, (err) => {
