@@ -1,0 +1,31 @@
+{
+  "name": "mongodb_api",
+  "version": "1.0.0",
+  "description": "Database course exam",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --env-file=.env server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/belinda-g-freitas/mongodb-test-api.git"
+  },
+  "author": "Bélinda Gloria E. A. Freitas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/belinda-g-freitas/mongodb-test-api/issues"
+  },
+  "homepage": "https://github.com/belinda-g-freitas/mongodb-test-api#readme",
+  "dependencies": {
+    "@prisma/client": "^5.7.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "prisma": "^5.7.1"
+  }
+}
