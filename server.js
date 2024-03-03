@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+const connectDB = require('./db/connect');
 const globals = require('./utils/globals')
 // 
 const server = express();
@@ -17,28 +18,19 @@ const routers = require('./routes/index');
 // 
 server.use(`${globals.apiRoute}loan`, routers.loan);
 server.use(`${globals.apiRoute}book`, routers.book);
-server.use(`${globals.apiRoute}autor`, routers.autor);
-// server.use('/', );
+server.use(`${globals.apiRoute}author`, routers.author);
 
-server.listen(port, (err) => {
-  if (err) console.log("Error while starting server");
-  console.log(`Server running at http://localhost:${port}/`);
-});
+const start = async () => {
+  try {
+    await connectDB(process.env.DATABASE_URL);
+    
+    server.listen(port, (err) => {
+      if (err) console.log("Error while starting server");
+      console.log(`Server running at http://localhost:${port}/`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-/**# [transport-ticket-booking](https://github.com/belinda-g-freitas/transport-ticket-booking)
-This project is a fullstack transport ticket booking server.
-## TECHNOLOGIES
-### Web frontend
-
-- HTML 5
-- Boostrap 4
-
-###  Backend & globals.apiRoute
-
-- Node.JS v18.17.1
-- MYSQL  8.0.34-0
-
-### Mobile (Android)
-
-- Dart
-- Flutter */
+start();

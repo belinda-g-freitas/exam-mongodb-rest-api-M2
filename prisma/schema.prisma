@@ -5,44 +5,55 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex"]
 }
 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+  
 }
 
 model Book {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   title             String
-  author            Author[] @relation(fields: [authorId], references: [id])
-  authorId          String   @db.ObjectId
+  description       String
+  Authors           Author[] @relation(fields: [authors], references: [id])
+  authors           String[] @db.ObjectId
   genres            String[]
-  publishYear       DateTime
+  publishYear       Int
   availableQuantity Int
   Loan              Loan[]
+
+  @@index([title])
+  @@fulltext([title, description])
 }
 
 model User {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   nationality String
-  birthday    DateTime
+  birthday    String //DateTime
+  Loan        Loan[]
+
+  @@index([name])
 }
 
 model Author {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   user           String   @db.ObjectId
-  publishedBooks Book[]   @relation(fields: [bookId], references: [id])
-  bookId         String[] @db.ObjectId
+  Books          Book[]   @relation(fields: [publishedBooks], references: [id])
+  publishedBooks String[] @db.ObjectId
 }
 
 model Loan {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  comment String
-  user    Int
-  userId  String @db.ObjectId
-  book    Book   @relation(fields: [bookId], references: [id])
-  bookId  String @db.ObjectId
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  User                User      @relation(fields: [user], references: [id])
+  user                String    @db.ObjectId
+  Book                Book      @relation(fields: [book], references: [id])
+  book                String    @db.ObjectId
+  loanDate            DateTime
+  plannedReturnDate   DateTime
+  effectiveReturnDate DateTime?
 }
