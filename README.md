@@ -23,4 +23,4 @@ A node.js API for the database course exam.
 - api/v1/book/delete (DELETE)
 <!-- - api/v1/book/update (PUT)-->
 
-# NB: Refer to routers or schemas to see required fields
+## NB: Refer to routers or schemas to see required fields
