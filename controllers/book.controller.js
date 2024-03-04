@@ -71,7 +71,7 @@ const controller = {
     const data = matchedData(req)
 
     try {
-      const books = await prisma.book.findMany({ where: { title: data.search } })
+      const books = await bookModel.find({ $text: { $search: data.text, $caseSensitive: false } })
       res.json({ message: 'Success', data: books });
     } catch (e) {
       console.error(e);
@@ -85,7 +85,7 @@ const controller = {
 
     const data = matchedData(req)
     try {
-      const book = await bookModel.findOne({ user: data.id })
+      const book = await bookModel.findOne(data.id)
       if (!book) res.status(422).json({ message: 'Error', errors: 'Book with this id doesn\'t exist.' });
       await book.deleteOne();
 

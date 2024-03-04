@@ -5,19 +5,23 @@ const controller = require('../controllers').author;
 // 
 router.route('/create').post(
   body('name').isString().escape().trim().isLength({ min: 3 }),
-  body('nationality').isString().escape().trim().isLength(),
+  body('nationality').isString().escape().trim().isLength({ min: 2 }),
   body('birthday').isDate({ format: 'DD/MM/YYYY' }),
   body('books').isArray(),
   controller.create,
 );
 // 
 router.route('update').put(
-  
+  body('id').isMongoId(),
+  body('name').optional().isString().escape().trim().isLength({ min: 3 }),
+  body('nationality').optional().isString().escape().trim().isLength({ min: 2 }),
+  body('birthday').optional().isDate({ format: 'DD/MM/YYYY' }),
+  body('books').optional().isArray(),
   controller.update,
 )
 // 
 router.route('/delete').delete(
-  query('id').isString().escape().trim().notEmpty(),
+  query('id').isMongoId(),
   controller.delete,
 )
 

@@ -26,7 +26,7 @@ const controller = {
       })
 
       const updatedbook = await bookModel.findById(loan.book);
-      await updatedbook.updateOne({ $set: { availableQuantity: updatedbook.availableQuantity - 1 } })
+      await updatedbook.updateOne({ $inc: { availableQuantity: - 1 } })
 
       res.json({ message: 'Success', data: { 'loan': loan } });
     } catch (e) {
@@ -61,7 +61,7 @@ const controller = {
 
       if (!loan.effectiveReturnDate) {
         const book = await bookModel.findById(loan.book)
-        await book.updateOne({ $set: { availableQuantity: book.availableQuantity + 1 } });
+        await book.updateOne({ $inc: { availableQuantity: 1 } });
       }
 
       res.json({ message: 'Success', data: loan });
@@ -91,20 +91,12 @@ const controller = {
   },
   // 
   countMonthly: async (req, res) => {
-    const result = validationResult(req);
-    if (!result.isEmpty()) return res.status(422).json({ message: 'Error', errors: result.array() });
-
-    const data = matchedData(req)
-
     try {
-      // await prisma.loan.aggregate({ _count: { loanDate } });
-      const book = await loanModel.aggregate({
-        pipeline: [
-          {
-            $group: { _id: "$loanDate", totalLoan: { $sum: 1 } },
-          }
-        ]
-      }) //({_count:{_all},})
+      const book = await loanModel.aggregate([
+        {
+          $group: { _id: "$loanDate", totalLoan: { $sum: 1 } },
+        }
+      ])
       res.json({ message: 'Success', data: book });
     } catch (e) {
       console.error(e);
@@ -112,6 +104,5 @@ const controller = {
     }
   },
 }
-
 
 module.exports = controller

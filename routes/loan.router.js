@@ -28,5 +28,9 @@ router.route('/update-and-delete').put(
   controller.updateDateAndDelete,
 );
 
+router.route('/monthly').get(
+  controller.countMonthly,
+)
+
 
 module.exports = router

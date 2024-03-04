@@ -42,8 +42,8 @@ const controller = {
       let author
       if (data.name || data.birthday || data.nationality) {
         author = await userModel.updateOne({
-          where: { id: data.auhor },
-          data: {
+          $where: { id: data.auhor },
+          $set: {
             name: data.name,
             birthday: data.birthday,
             nationality: data.nationality,
@@ -52,8 +52,8 @@ const controller = {
       }
       if (data.books) {
         author = await authorModel.updateOne({
-          where: { id: data.author },
-          data: {
+          $where: { id: data.author },
+          $set: {
             publishedBooks: data.books,
           },
         })
