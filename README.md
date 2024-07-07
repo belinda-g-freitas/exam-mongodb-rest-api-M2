@@ -1,4 +1,4 @@
-# [transport-ticket-booking-api](https://github.com/belinda-g-freitas/mongodb-test-api)
+# Node.js, MongoDB, Rest API
 A node.js API for the database course exam.
 
 ## GETTING STARTED
